@@ -3,13 +3,16 @@ syntax on
 set encoding=utf-8
 set nocompatible
 set number
-set cursorline
 set tabstop=4
 set expandtab
 set hlsearch
 set cmdheight=1
 set laststatus=2
 set backspace=indent,eol,start
+
+set background=dark
+colorscheme solarized
+let g:solarized_termcolors=256
 
 if filereadable(expand("~/.vimrc.bundles"))
     source ~/.vimrc.bundles
