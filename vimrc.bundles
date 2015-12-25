@@ -9,5 +9,7 @@ Plugin 'scrooloose/nerdtree'
 
 Plugin 'scrooloose/syntastic'
 
+Plugin 'bling/vim-airline'
+
 call vundle#end()
 filetype plugin indent on
