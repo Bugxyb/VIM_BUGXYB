@@ -11,5 +11,7 @@ Plugin 'scrooloose/syntastic'
 
 Plugin 'bling/vim-airline'
 
+Plugin 'altercation/vim-colors-solarized'
+
 call vundle#end()
 filetype plugin indent on
