@@ -13,5 +13,9 @@ Plugin 'bling/vim-airline'
 
 Plugin 'altercation/vim-colors-solarized'
 
+if executable('ctags')
+    Plugin 'majutsushi/tagbar'
+endif
+
 call vundle#end()
 filetype plugin indent on

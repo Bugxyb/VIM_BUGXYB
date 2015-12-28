@@ -11,12 +11,19 @@ set autoindent
 set cindent
 set expandtab
 set hlsearch
+set cursorline
 set cmdheight=1
 set laststatus=2
 set backspace=indent,eol,start
 set t_Co=256
 set background=dark
 
+    "   Vundle  "
+if filereadable(expand("~/.vimrc.bundles"))
+    source ~/.vimrc.bundles
+endif
+
+    "   solarized   "
 if filereadable(expand("~/.vim/bundle/vim-colors-solarized/colors/solarized.vim"))
     let g:solarized_termcolors=256
     let g:solarize_termtrans=1
@@ -25,14 +32,30 @@ if filereadable(expand("~/.vim/bundle/vim-colors-solarized/colors/solarized.vim"
     color solarized
 endif
 
-if filereadable(expand("~/.vimrc.bundles"))
-    source ~/.vimrc.bundles
+    "   Tagbar  "
+if isdirectory(expand("~/.vim/bundle/tagbar/"))
+    nnoremap <silent> <F3> :TagbarToggle<CR>
 endif
 
-let g:syntastic_check_on_open=1
-let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
-let g:syntastic_always_populate_loc_list=1
-let g:syntastic_auto_loc_list=1
-let g:syntastic_check_on_wq=0
+    "   Syntastic   "
+if isdirectory(expand("~/.vim/bundle/syntastic/"))
+    let g:syntastic_check_on_open=1
+    let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
+    let g:syntastic_always_populate_loc_list=1
+    let g:syntastic_auto_loc_list=1
+    let g:syntastic_check_on_wq=0
+endif
 
-nmap <F5> :NERDTreeToggle<cr>
+    "   NERDTree    "
+if isdirectory(expand("~/.vim/bundle/nerdtree"))
+    nnoremap <F2> :NERDTreeToggle<cr>
+    let NERDTreeWinPos=0
+    let NERDTreeWinSize=25
+    let NERDTreeShowBookmarks=1
+    let NERDTreeIgnore=['\.py[cd]$','\~$','\.swo$','\.swp$','^\.git$','^\.hg$','^\.svn$','\.bzr$']
+    let NERDTreechDirMode=0
+    let NERDQuitOnOpen=1
+    let NERDTreeMouseMode=2
+    let NERDTreeShowHidden=1
+    let NERDTreeKeepTreeInNewTab=1
+endif
