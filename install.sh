@@ -16,3 +16,6 @@ cp vimrc.bundles ~/.vimrc.bundles
 
 echo "Install Plugin from Vundle"
 vim +PluginInstall +qall
+
+#check Mac OS Linux and put colors
+cp -r ~/.vim/bundle/vim-colors-solarized/colors/ ~/.vim/colors
