@@ -1,19 +1,46 @@
+set encoding=utf-8
+"set shortcuts prefix for <Leader>
+let mapleader=";"
+"set Shortcuts ;b and ;e to line head and tail.
+nmap <Leader>b 0
+nmap <leader>e $
+"set Shortcuts for quit and save
+nmap <Leader>q :q<CR>
+nmap <Leader>w :w<CR>
+nmap <Leader>WQ :wa<CR>:q<CR>
+nmap <Leader>Q :qa!<CR>
+"set Shortcuts for jump windows
+nnoremap <Leader>nw <C-w><C-w>
+nnoremap <Leader>lw <C-W>l
+nnoremap <Leader>hw <C-W>h
+nnoremap <Leader>kw <C-W>k
+nnoremap <Leader>jw <C-W>j
+"set syntax on and enable
 syntax on
 syntax enable
 
-set encoding=utf-8
+set incsearch
+set ignorecase
 set nocompatible
-set number
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
-set autoindent
-set cindent
-set expandtab
-set hlsearch
-set cursorline
+set wildmenu
+
 set cmdheight=1
 set laststatus=2
+set ruler
+set number
+set cursorline
+set hlsearch
+
+filetype indent on
+set expandtab
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+
+set nowrap
+
+set autoindent
+set cindent
 set backspace=indent,eol,start
 set t_Co=256
 set background=dark
@@ -32,9 +59,15 @@ if filereadable(expand("~/.vim/bundle/vim-colors-solarized/colors/solarized.vim"
     color solarized
 endif
 
+    "   vim-airline "
+if isdirectory(expand("~/.vim/bundle/vim-airline"))
+    let g:airline_theme="solarized"
+endif
+
     "   Tagbar  "
 if isdirectory(expand("~/.vim/bundle/tagbar/"))
     nnoremap <silent> <F3> :TagbarToggle<CR>
+    let tagbar_width=32
 endif
 
     "   NERDTree    "
@@ -49,4 +82,13 @@ if isdirectory(expand("~/.vim/bundle/nerdtree"))
     let NERDTreeMouseMode=2
     let NERDTreeShowHidden=1
     let NERDTreeKeepTreeInNewTab=1
+endif
+    "   Indent-guides   "
+if isdirectory(expand("~/.vim/bundle/vim-indent-guides"))
+    let g:indent_guides_start_level=2
+    let g:indent_guides_guide_size=1
+    let g:indent_guides_auto_colors=0
+    hi IndentGuidesOdd ctermbg=black
+    hi IndentGuidesEven ctermbg=darkgrey
+    nmap <silent> <Leader>i <Plug>IndentGuidesToggle
 endif
