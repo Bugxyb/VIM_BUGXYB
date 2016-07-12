@@ -4,17 +4,14 @@ let mapleader=";"
 "set Shortcuts ;b and ;e to line head and tail.
 nmap <Leader>b 0
 nmap <leader>e $
-"set Shortcuts for quit and save
-nmap <Leader>q :q<CR>
-nmap <Leader>w :w<CR>
-nmap <Leader>WQ :wa<CR>:q<CR>
-nmap <Leader>Q :qa!<CR>
+
 "set Shortcuts for jump windows
-nnoremap <Leader>nw <C-w><C-w>
-nnoremap <Leader>lw <C-W>l
-nnoremap <Leader>hw <C-W>h
-nnoremap <Leader>kw <C-W>k
-nnoremap <Leader>jw <C-W>j
+nnoremap <Leader>n <C-w><C-w>
+nnoremap <Leader>l <C-W>l
+nnoremap <Leader>h <C-W>h
+nnoremap <Leader>k <C-W>k
+nnoremap <Leader>j <C-W>j
+
 "set syntax on and enable
 syntax on
 syntax enable

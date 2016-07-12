@@ -7,3 +7,6 @@ Bugxyb VIM-Configure
 * Functions
     * F2 open NERDTree
     * F3 open Tagbar
+
+* Add
+    * python mode!
