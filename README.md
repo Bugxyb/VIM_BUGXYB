@@ -5,8 +5,8 @@ Bugxyb VIM-Configure
 * Install ctags to enable Tagbar
 
 * Functions
-    * F2 open NERDTree
-    * F3 open Tagbar
+    * ;F2 open NERDTree
+    * ;F3 open Tagbar
 
 * Add
     * python mode!
