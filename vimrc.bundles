@@ -14,7 +14,7 @@ Plugin 'altercation/vim-colors-solarized'
 
 Plugin 'nathanaelkane/vim-indent-guides'
 
-Plugin 'klen/python-mode'
+Plugin 'python-mode/python-mode'
 
 if executable('ctags')
     Plugin 'majutsushi/tagbar'
