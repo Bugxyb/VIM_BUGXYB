@@ -1,7 +1,7 @@
 set encoding=utf-8
 
 "set shortcuts prefix for <Leader>
-let mapleader=";"
+let mapleader=" "
 
 "set Shortcuts ;1 and ;2 to line head and tail.
 nmap <Leader>1 0
@@ -67,13 +67,13 @@ endif
 
     "   Tagbar  "
 if isdirectory(expand("~/.vim/bundle/tagbar/"))
-    nnoremap <silent> <Leader><F3> :TagbarToggle<CR>
+    nnoremap <silent> <Leader>b :TagbarToggle<CR>
     let tagbar_width=32
 endif
 
     "   NERDTree    "
 if isdirectory(expand("~/.vim/bundle/nerdtree"))
-    nnoremap <Leader><F2> :NERDTreeToggle<cr>
+    nnoremap <Leader>t :NERDTreeToggle<cr>
     let NERDTreeWinPos=0
     let NERDTreeWinSize=25
     let NERDTreeShowBookmarks=1
