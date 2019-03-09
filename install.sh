@@ -11,8 +11,8 @@
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
 # Install .vimrc
-cp vimrc ~/.vimrc
-cp vimrc.bundles ~/.vimrc.bundles
+cp conf/vimrc ~/.vimrc
+cp conf/vimrc.bundles ~/.vimrc.bundles
 
 # Install Plugin from Vundle
 vim +PluginInstall +qall
