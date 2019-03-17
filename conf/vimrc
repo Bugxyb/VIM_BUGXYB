@@ -6,8 +6,11 @@ Plug 'scrooloose/nerdtree' , {'on': 'NERDTreeToggle'}
 Plug 'jistr/vim-nerdtree-tabs' , {'on': 'NERDTreeTabsToggle'}
 Plug 'Xuyuanp/nerdtree-git-plugin'
 
+" airline
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+
+" solarized
 Plug 'altercation/vim-colors-solarized'
 
 Plug 'nathanaelkane/vim-indent-guides'
@@ -43,18 +46,31 @@ filetype plugin indent on
 "set backspace
 set backspace=indent,eol,start
 
+
+" 显示标尺
 set ruler
+" 显示行号
 set number
+" 显示当前行
 set cursorline
+" 搜索字符高亮
 set hlsearch
 set incsearch
+" 忽略大小写
+set ignorecase
+" 去掉和vi的一致性
 set nocompatible
+" 定义tab的栏，显示所有可执行的命令
 set wildmenu
+set wildmode=longest:list,full
+" 去除备份文件
 set nobackup
 set nowrap
 set autoindent
 set cindent
+" 显示括号匹配
 set showmatch
+set showcmd
 
 set expandtab
 set tabstop=4
@@ -92,6 +108,7 @@ if isdirectory(expand("~/.vim/Bundle/ale"))
             \ 'python': ['pyls'],
             \ 'php': ['langserver'],
             \ 'sh': ['language_server'],
+            \ 'vim': ['vint'],
             \ }
 
     let g:ale_linters_explicit = 1
