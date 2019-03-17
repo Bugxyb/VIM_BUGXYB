@@ -1,5 +1,10 @@
 set encoding=utf-8
 
+silent function! OSX()
+    return has('macunix')
+endfunction
+
+
 call plug#begin('~/.vim/Bundle')
 " NERD tree
 Plug 'scrooloose/nerdtree' , {'on': 'NERDTreeToggle'}
@@ -19,6 +24,11 @@ Plug 'w0rp/ale'
 
 Plug 'python-mode/python-mode', { 'branch': 'develop' }
 
+if OSX()
+    Plug 'usr/local/opt/fzf'
+    set rtp+=/usr/local/opt/fzf
+    Plug 'junegunn/fzf.vim'
+endif
 call plug#end()
 
 
@@ -144,3 +154,10 @@ if isdirectory(expand("~/.vim/Bundle/vim-indent-guides"))
     hi IndentGuidesOdd ctermbg=black
     hi IndentGuidesEven ctermbg=darkgrey
 endif
+
+command! -bang -nargs=* Ag
+  \ call fzf#vim#ag(<q-args>,
+  \                 <bang>0 ? fzf#vim#with_preview('up:60%')
+  \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
+  \                 <bang>0)
+nnoremap <silent> <Leader>f :Ag<CR>
