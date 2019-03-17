@@ -7,15 +7,17 @@
 #History:
 #   2015/12/25  Bugxyb  Create
 
-# Get Vundle Vim from Git
-git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+# Install vim-plug
+if [ ! -f "$HOME/.vim/autoload/plug.vim" ]; then
+    curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+fi
+
 
 # Install .vimrc
 cp conf/vimrc ~/.vimrc
-cp conf/vimrc.bundles ~/.vimrc.bundles
 
-# Install Plugin from Vundle
-vim +PluginInstall +qall
+# Install Plug 
+vim +PlugInstall +qall
 
 #check Mac OS Linux and put colors
-cp -r ~/.vim/bundle/vim-colors-solarized/colors/ ~/.vim/colors
+#cp -r ~/.vim/bundle/vim-colors-solarized/colors/ ~/.vim/colors

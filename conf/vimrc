@@ -1,5 +1,25 @@
 set encoding=utf-8
 
+call plug#begin('~/.vim/Bundle')
+" NERD tree
+Plug 'scrooloose/nerdtree' , {'on': 'NERDTreeToggle'}
+Plug 'jistr/vim-nerdtree-tabs' , {'on': 'NERDTreeTabsToggle'}
+Plug 'Xuyuanp/nerdtree-git-plugin'
+
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'altercation/vim-colors-solarized'
+
+Plug 'nathanaelkane/vim-indent-guides'
+
+Plug 'w0rp/ale'
+
+Plug 'python-mode/python-mode', { 'branch': 'develop' }
+
+call plug#end()
+
+
+
 "set shortcuts prefix for <Leader>
 let mapleader=" "
 
@@ -16,64 +36,39 @@ nnoremap <Leader>j <C-W>j
 
 "set syntax on and enable
 syntax on
-syntax enable
+"syntax enable
+filetype plugin indent on
 
-set incsearch
-set ignorecase
-set nocompatible
-set wildmenu
 
-set nobackup
+"set backspace
+set backspace=indent,eol,start
 
-set cmdheight=1
-set laststatus=2
 set ruler
 set number
 set cursorline
 set hlsearch
+set incsearch
+set nocompatible
+set wildmenu
+set nobackup
+set nowrap
+set autoindent
+set cindent
+set showmatch
 
-filetype indent on
 set expandtab
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
 
-set nowrap
-
-set autoindent
-set cindent
-set backspace=indent,eol,start
 set t_Co=256
 set background=dark
 
-    "   Vundle  "
-if filereadable(expand("~/.vimrc.bundles"))
-    source ~/.vimrc.bundles
-endif
-
-    "   solarized   "
-if filereadable(expand("~/.vim/bundle/vim-colors-solarized/colors/solarized.vim"))
-    let g:solarized_termcolors=256
-    let g:solarize_termtrans=1
-    let g:solarize_constrast="normal"
-    let g:solarize_visibility="normal"
-    color solarized
-endif
-
-    "   vim-airline "
-if isdirectory(expand("~/.vim/bundle/vim-airline"))
-    let g:airline_theme="solarized"
-endif
-
-    "   Tagbar  "
-if isdirectory(expand("~/.vim/bundle/tagbar/"))
-    nnoremap <silent> <Leader>b :TagbarToggle<CR>
-    let tagbar_width=32
-endif
-
-    "   NERDTree    "
-if isdirectory(expand("~/.vim/bundle/nerdtree"))
-    nnoremap <Leader>t :NERDTreeToggle<cr>
+" set NERD Tree
+if isdirectory(expand("~/.vim/Bundle/nerdtree"))
+    autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+    nnoremap <Leader><F1> :NERDTreeToggle<CR>
+    nnoremap <Leader><F2> :NERDTreeTabsToggle<CR>
     let NERDTreeWinPos=0
     let NERDTreeWinSize=25
     let NERDTreeShowBookmarks=1
@@ -83,13 +78,52 @@ if isdirectory(expand("~/.vim/bundle/nerdtree"))
     let NERDTreeMouseMode=2
     let NERDTreeShowHidden=1
     let NERDTreeKeepTreeInNewTab=1
+    let g:NERDTreeDirArrowExpandable = '▸'
+    let g:NERDTreeDirArrowCollapsible = '▾'
 endif
+
+" set ALE and language Server
+set completeopt=menu,menuone,preview,noselect,noinsert
+if isdirectory(expand("~/.vim/Bundle/ale"))
+    let g:ale_completion_enabled=1
+    let g:ale_php_langserver_use_global = 1
+    let g:ale_php_langserver_executable=$HOME.'/.composer/vendor/bin/php-language-server.php'
+    let g:ale_linters={
+            \ 'python': ['pyls'],
+            \ 'php': ['langserver'],
+            \ 'sh': ['language_server'],
+            \ }
+
+    let g:ale_linters_explicit = 1
+    let g:ale_sign_column_always = 1
+    let g:ale_set_highlights = 0
+endif
+
+"   vim-airline
+if isdirectory(expand("~/.vim/Bundle/vim-airline"))
+    let g:airline_theme="solarized"
+endif
+
+" python-mode
+if isdirectory(expand("~/.vim/Bundle/python-mode"))
+    let g:pymode_lint = 0
+endif
+
+    "   solarized   "
+if filereadable(expand("~/.vim/Bundle/vim-colors-solarized/colors/solarized.vim"))
+    let g:solarized_termcolors=256
+    let g:solarize_termtrans=1
+    let g:solarize_constrast="normal"
+    let g:solarize_visibility="normal"
+    color solarized
+endif
+
     "   Indent-guides   "
-if isdirectory(expand("~/.vim/bundle/vim-indent-guides"))
+if isdirectory(expand("~/.vim/Bundle/vim-indent-guides"))
+    let g:indent_guides_enable_on_vim_startup = 1
     let g:indent_guides_start_level=2
     let g:indent_guides_guide_size=1
     let g:indent_guides_auto_colors=0
     hi IndentGuidesOdd ctermbg=black
     hi IndentGuidesEven ctermbg=darkgrey
-    nmap <silent> <Leader>i <Plug>IndentGuidesToggle
 endif
