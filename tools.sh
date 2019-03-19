@@ -2,7 +2,7 @@
 
 function mac_brew() {
     ls -al
-    brew install npm composer fzf the_silver_searcher
+    brew install npm composer fzf the_silver_searcher php ripgrep
 }
 
 
