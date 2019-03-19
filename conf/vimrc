@@ -1,4 +1,7 @@
+"set utf-8 encode
 set encoding=utf-8
+" 去掉和vi的一致性
+set nocompatible
 
 silent function! OSX()
     return has('macunix')
@@ -7,68 +10,65 @@ endfunction
 
 call plug#begin('~/.vim/Bundle')
 " NERD tree
-Plug 'scrooloose/nerdtree' , {'on': 'NERDTreeToggle'}
-Plug 'jistr/vim-nerdtree-tabs' , {'on': 'NERDTreeTabsToggle'}
+Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
+
+" solarized
+Plug 'altercation/vim-colors-solarized'
 
 " airline
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
-" solarized
-Plug 'altercation/vim-colors-solarized'
-
-Plug 'nathanaelkane/vim-indent-guides'
-
-Plug 'w0rp/ale'
-
+" fzf for Mac OS
 if OSX()
-    Plug 'usr/local/opt/fzf'
-    set rtp+=/usr/local/opt/fzf
+    Plug '/usr/local/opt/fzf'
     Plug 'junegunn/fzf.vim'
 endif
+" ALE
+"Plug 'w0rp/ale'
+
 call plug#end()
 
+"set background for solarized
+syntax enable
+if isdirectory(expand("~/.vim/Bundle/vim-colors-solarized"))
+    set background=dark
+    colorscheme solarized
+    let g:solarized_termcolors=256
+    let g:solarize_termtrans=1
+    let g:solarize_constrast="normal"
+    let g:solarize_visibility="normal"
+endif
 
-
-"set shortcuts prefix for <Leader>
-let mapleader=" "
-
-"set Shortcuts ;1 and ;2 to line head and tail.
-nmap <Leader>1 0
-nmap <leader>2 $
-
-"set Shortcuts for jump windows
-nnoremap <Leader>n <C-w><C-w>
-nnoremap <Leader>l <C-W>l
-nnoremap <Leader>h <C-W>h
-nnoremap <Leader>k <C-W>k
-nnoremap <Leader>j <C-W>j
-
-"set syntax on and enable
-syntax on
-"syntax enable
-filetype plugin indent on
-
+" set tab
+set expandtab
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
 
 "set backspace
 set backspace=indent,eol,start
-
-set cc=80
-
 " 显示标尺
 set ruler
 " 显示行号
 set number
 " 显示当前行
 set cursorline
+
+"set syntax on and enable
+syntax on
+filetype plugin indent on
+
+
+
+set cc=80
+
 " 搜索字符高亮
 set hlsearch
 set incsearch
 " 忽略大小写
 set ignorecase
-" 去掉和vi的一致性
-set nocompatible
 " 定义tab的栏，显示所有可执行的命令
 set wildmenu
 set wildmode=longest:list,full
@@ -81,36 +81,15 @@ set cindent
 set showmatch
 set showcmd
 
-set expandtab
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
-
-set t_Co=256
-set background=dark
-
-" set NERD Tree
-if isdirectory(expand("~/.vim/Bundle/nerdtree"))
-    autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-    nnoremap <Leader><F1> :NERDTreeToggle<CR>
-    nnoremap <Leader><F2> :NERDTreeTabsToggle<CR>
-    let NERDTreeWinPos=0
-    let NERDTreeWinSize=25
-    let NERDTreeShowBookmarks=1
-    let NERDTreeIgnore=['\.py[cd]$','\~$','\.swo$','\.swp$','^\.git$','^\.hg$','^\.svn$','\.bzr$']
-    let NERDTreechDirMode=0
-    let NERDQuitOnOpen=1
-    let NERDTreeMouseMode=2
-    let NERDTreeShowHidden=1
-    let NERDTreeKeepTreeInNewTab=1
-    let g:NERDTreeDirArrowExpandable = '▸'
-    let g:NERDTreeDirArrowCollapsible = '▾'
-endif
 
 " set ALE and language Server
 set completeopt=menu,menuone,preview,noselect,noinsert
 if isdirectory(expand("~/.vim/Bundle/ale"))
-    let g:ale_completion_enabled=1
+    " Set this variable to 1 to fix files when you save them.
+    let g:ale_fix_on_save = 1
+    " Enable completion where available.
+    " This setting must be set before ALE is loaded.
+    let g:ale_completion_enabled = 1
     let g:ale_php_langserver_use_global = 1
     let g:ale_php_langserver_executable=$HOME.'/.composer/vendor/bin/php-language-server.php'
     let g:ale_linters={
@@ -119,47 +98,50 @@ if isdirectory(expand("~/.vim/Bundle/ale"))
             \ 'sh': ['language_server'],
             \ 'vim': ['vint'],
             \ }
-
+    " Only run linters named in ale_linters settings.
     let g:ale_linters_explicit = 1
     let g:ale_sign_column_always = 1
+    let g:ale_sign_error = 'E'
+    let g:ale_sign_warning = 'W'
+    highlight clear ALEErrorSign
+    highlight clear ALEWarningSign
+    " Set this in your vimrc file to disabling highlighting
     let g:ale_set_highlights = 0
-        let g:ale_lint_on_text_changed = 'never'
+    " Set this. Airline will handle the rest.
+    let g:airline#extensions#ale#enabled = 1
+
+    function! LinterStatus() abort
+        let l:counts = ale#statusline#Count(bufnr(''))
+        let l:all_errors = l:counts.error + l:counts.style_error
+        let l:all_non_errors = l:counts.total - l:all_errors
+        return l:counts.total == 0 ? 'OK' : printf(
+        \   '%dW %dE',
+        \   all_non_errors,
+        \   all_errors
+        \)
+    endfunction
+    set statusline=%{LinterStatus()}
+    let g:ale_echo_msg_error_str = 'E'
+    let g:ale_echo_msg_warning_str = 'W'
+    let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+    " Write this in your vimrc file
+    let g:ale_lint_on_text_changed = 'never'
+    " You can disable this option too
+    " if you don't want linters to run on opening a file
     let g:ale_lint_on_enter = 0
+    " Write this in your vimrc file
+    let g:ale_set_loclist = 0
+    let g:ale_set_quickfix = 1
     let g:ale_open_list = 1
-" Set this if you want to.
-" This can be useful if you are combining ALE with
-" some other plugin which sets quickfix errors, etc.
-let g:ale_keep_list_window_open = 1
-let g:ale_list_window_size = 5
+    " Set this if you want to.
+    " This can be useful if you are combining ALE with
+    " some other plugin which sets quickfix errors, etc.
+    let g:ale_keep_list_window_open = 1
+    let g:ale_list_window_size = 5
 endif
 
-"   vim-airline
-if isdirectory(expand("~/.vim/Bundle/vim-airline"))
-    let g:airline_theme="solarized"
-endif
 
-    "   solarized   "
-if filereadable(expand("~/.vim/Bundle/vim-colors-solarized/colors/solarized.vim"))
-    let g:solarized_termcolors=256
-    let g:solarize_termtrans=1
-    let g:solarize_constrast="normal"
-    let g:solarize_visibility="normal"
-    color solarized
-endif
-
-    "   Indent-guides   "
-if isdirectory(expand("~/.vim/Bundle/vim-indent-guides"))
-    let g:indent_guides_enable_on_vim_startup = 1
-    let g:indent_guides_start_level=2
-    let g:indent_guides_guide_size=1
-    let g:indent_guides_auto_colors=0
-    hi IndentGuidesOdd ctermbg=black
-    hi IndentGuidesEven ctermbg=darkgrey
-endif
-
-command! -bang -nargs=* Ag
-  \ call fzf#vim#ag(<q-args>,
-  \                 <bang>0 ? fzf#vim#with_preview('up:60%')
-  \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
-  \                 <bang>0)
-nnoremap <silent> <Leader>f :Ag<CR>
+" vimrc files
+for s:path in split(glob('~/.vim/vimrc/*.vim'), "\n")
+  exe 'source ' . s:path
+endfor
