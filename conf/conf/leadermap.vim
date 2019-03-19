@@ -9,14 +9,13 @@ nmap <Leader>1 0
 nmap <leader>2 $
 
 "set Shortcuts for jump windows
-nnoremap <Leader><Tab> <C-w><C-w>
+nnoremap <Leader>q <C-w><C-w>
 nnoremap <Leader>l <C-W>l
 nnoremap <Leader>h <C-W>h
 nnoremap <Leader>k <C-W>k
 nnoremap <Leader>j <C-W>j
 
-nnoremap <silent> <Leader>z :tablast<CR>
-nnoremap <silent> <Leader>x :tabnext<CR>
+nnoremap <silent> <Leader><Tab> :tabnext<CR>
 
 
 "Plug
