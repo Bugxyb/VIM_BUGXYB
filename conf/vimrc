@@ -16,22 +16,29 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 " solarized
 Plug 'altercation/vim-colors-solarized'
 
-" airline
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+" lightline
+Plug 'itchyny/lightline.vim'
 
 " fzf for Mac OS
 if OSX()
     Plug '/usr/local/opt/fzf'
     Plug 'junegunn/fzf.vim'
 endif
+
+"markdown
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown'
+Plug 'suan/vim-instant-markdown'
+
 " ALE
-"Plug 'w0rp/ale'
+Plug 'w0rp/ale'
 
 call plug#end()
 
 "set background for solarized
 syntax enable
+syntax on
+
 if isdirectory(expand("~/.vim/Bundle/vim-colors-solarized"))
     set background=dark
     colorscheme solarized
@@ -57,12 +64,7 @@ set number
 set cursorline
 
 "set syntax on and enable
-syntax on
 filetype plugin indent on
-
-
-
-set cc=80
 
 " 搜索字符高亮
 set hlsearch
@@ -74,72 +76,16 @@ set wildmenu
 set wildmode=longest:list,full
 " 去除备份文件
 set nobackup
+
+" set cc line for 80
+set cc=80
+
 set nowrap
 set autoindent
 set cindent
 " 显示括号匹配
 set showmatch
 set showcmd
-
-
-" set ALE and language Server
-set completeopt=menu,menuone,preview,noselect,noinsert
-if isdirectory(expand("~/.vim/Bundle/ale"))
-    " Set this variable to 1 to fix files when you save them.
-    let g:ale_fix_on_save = 1
-    " Enable completion where available.
-    " This setting must be set before ALE is loaded.
-    let g:ale_completion_enabled = 1
-    let g:ale_php_langserver_use_global = 1
-    let g:ale_php_langserver_executable=$HOME.'/.composer/vendor/bin/php-language-server.php'
-    let g:ale_linters={
-            \ 'python': ['pyls'],
-            \ 'php': ['langserver'],
-            \ 'sh': ['language_server'],
-            \ 'vim': ['vint'],
-            \ }
-    " Only run linters named in ale_linters settings.
-    let g:ale_linters_explicit = 1
-    let g:ale_sign_column_always = 1
-    let g:ale_sign_error = 'E'
-    let g:ale_sign_warning = 'W'
-    highlight clear ALEErrorSign
-    highlight clear ALEWarningSign
-    " Set this in your vimrc file to disabling highlighting
-    let g:ale_set_highlights = 0
-    " Set this. Airline will handle the rest.
-    let g:airline#extensions#ale#enabled = 1
-
-    function! LinterStatus() abort
-        let l:counts = ale#statusline#Count(bufnr(''))
-        let l:all_errors = l:counts.error + l:counts.style_error
-        let l:all_non_errors = l:counts.total - l:all_errors
-        return l:counts.total == 0 ? 'OK' : printf(
-        \   '%dW %dE',
-        \   all_non_errors,
-        \   all_errors
-        \)
-    endfunction
-    set statusline=%{LinterStatus()}
-    let g:ale_echo_msg_error_str = 'E'
-    let g:ale_echo_msg_warning_str = 'W'
-    let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
-    " Write this in your vimrc file
-    let g:ale_lint_on_text_changed = 'never'
-    " You can disable this option too
-    " if you don't want linters to run on opening a file
-    let g:ale_lint_on_enter = 0
-    " Write this in your vimrc file
-    let g:ale_set_loclist = 0
-    let g:ale_set_quickfix = 1
-    let g:ale_open_list = 1
-    " Set this if you want to.
-    " This can be useful if you are combining ALE with
-    " some other plugin which sets quickfix errors, etc.
-    let g:ale_keep_list_window_open = 1
-    let g:ale_list_window_size = 5
-endif
-
 
 " vimrc files
 for s:path in split(glob('~/.vim/vimrc/*.vim'), "\n")

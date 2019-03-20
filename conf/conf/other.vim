@@ -1,10 +1,17 @@
 set laststatus=2  "永远显示状态栏
-"   vim-airline
 
-if isdirectory(expand("~/.vim/Bundle/vim-airline"))
-    let g:airline_theme="solarized"
-    let g:airline#extensions#tabline#enabled = 1
-    let g:airline#extensions#tabline#left_sep = ' '
-    let g:airline#extensions#tabline#left_alt_sep = '|'
-    let g:airline#extensions#tabline#formatter = 'default'
+"lightline
+let g:lightline = {
+      \ 'colorscheme': 'solarized',
+      \ }
+
+set noshowmode
+
+if !has('gui_running')
+  set t_Co=256
 endif
+
+
+let g:instant_markdown_slow = 1
+let g:vim_markdown_folding_disabled = 1
+
