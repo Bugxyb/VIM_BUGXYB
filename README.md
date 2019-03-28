@@ -5,3 +5,4 @@ Bugxyb VIM-Configure
 
 * Functions
     * F1 open NERDTree
+

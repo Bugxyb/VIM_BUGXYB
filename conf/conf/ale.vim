@@ -1,5 +1,5 @@
 " set ALE and language Server
-set completeopt=menu,menuone,preview,noselect,noinsert
+set completeopt=menu,menuone
 if isdirectory(expand("~/.vim/Bundle/ale"))
     "set php LS config
     let g:ale_php_langserver_use_global = 1
@@ -17,7 +17,7 @@ if isdirectory(expand("~/.vim/Bundle/ale"))
 
     " Set this variable to 1 to fix files when you save them.
     let g:ale_fix_on_save = 1
-    
+
     ""ALE fixers
     let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
@@ -34,7 +34,7 @@ if isdirectory(expand("~/.vim/Bundle/ale"))
             \ 'sh': ['language_server'],
             \ 'vim': ['vint'],
             \ }
-    
+
     " Only run linters named in ale_linters settings.
     let g:ale_linters_explicit = 1
     let g:ale_sign_column_always = 1
@@ -75,5 +75,3 @@ if isdirectory(expand("~/.vim/Bundle/ale"))
     let g:ale_keep_list_window_open = 1
     let g:ale_list_window_size = 5
 endif
-
-
